@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0,minimum-scale=1.0" />
+<link href="css/global.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="css/sign.css"/>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/calendar.js"></script>
+<script type="text/javascript">
+$(function(){
+	/**本段数据需要从api读取   ---begin---*/
+	var signList = "1,2,6,8,10,14,18";   // 本月已签到天数
+	var date = new Date();
+	var y = date.getFullYear();
+	var m = date.getMonth() + 1;
+	var d = date.getDate();
+	var today = y + "-" + m +  "-" + d;   // 当前日期
+	/**本段数据需要从api读取   ---end---*/
+	
+	var flag = 0;
+	$("#sign-btn").click(function(){
+		if (flag == 0){
+			flag = 1;
+			alert("签到成功");
+			
+			signList = signList + "," + d;
+			calendarInit(today, signList);
+			
+		} else {
+			alert("您今日已经签过到了")
+		}
+	});
+	
+	calendarInit(today, signList);
+	
+});
+
+function calendarInit(today, signList){
+	CalUtils.init({
+		cid : "calendar",  // 日历显示框id
+		today : today,  // 当日日期
+		signList : signList,  // 本月已签到
+		signImg : "img/sign-day.png"  // 签到标记
+	});
+}
+</script>
+<style>
+	.sign-btn-div{
+		padding-top: 3em;
+		padding-bottom: 1em;
+	}
+	.sign-btn-div img{
+		width: 14em;
+	}
+</style>
+</head>
+<body>
+<div class="main-content">
+	<div class="sign-btn-div">
+		<img src="img/sign-btn.png" alt="" id="sign-btn"/>
+	</div>
+	<div id="calendar"></div>
+</div>	
+</body>
+</html>
